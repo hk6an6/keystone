@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.devfactory.keystone/src-gen" editDirectory="/com.devfactory.keystone.edit/src"
+    editorDirectory="/com.devfactory.keystone.editor/src" modelPluginID="com.devfactory.keystone"
+    forceOverwrite="true" modelName="KeyStone" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="com.devfactory.keystone.edit"
+    editorPluginID="com.devfactory.keystone.editor" runtimeVersion="2.10">
+  <genPackages prefix="KeyStone" basePackage="com.devfactory" disposableProviderFactory="true"
+      fileExtensions="key" ecorePackage="KeyStone.ecore#/">
+    <genClasses ecoreClass="KeyStone.ecore#//ExpressionStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//ExpressionStatement/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//Expression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Expression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//Expression/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Expression/right"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Expression/arguments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//Expression/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//Step">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//Step/folderName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Step/context"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Step/actions"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//Action">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//Action/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Action/actionParams"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//Javascript">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//Javascript/code"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//Assignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Assignment/variableName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Assignment/assignedValue"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//BrowseToActionParams">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//BrowseToActionParams/url"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//OpenBrowserActionParams">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//OpenBrowserActionParams/browserName"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//DragActionParams">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//DragActionParams/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//DragActionParams/y"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//DragActionParams/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//DragActionParams/grab"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//DragActionParams/oX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//DragActionParams/oY"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//PauseActionParams">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//PauseActionParams/timePaused"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//WaitActionParams">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//WaitActionParams/propertyName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//WaitActionParams/expectedValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//WaitActionParams/delayTime"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//MouseActionParams">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//MouseActionParams/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//MouseActionParams/y"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//MouseActionParams/chord"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//KeyboardActionParams">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//KeyboardActionParams/overwrite"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//KeyboardActionParams/text"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//KeyboardChord">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//KeyboardChord/keys"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//Assertion">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//Assertion/negated"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Assertion/filter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//Assertion/child"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//KeyValuePair">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//KeyValuePair/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//KeyValuePair/right"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//KeyValuePair/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//KeyValuePair/valueIsRegex"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//KeyValuePair/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//KeyValuePair/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//RootStep"/>
+    <genClasses ecoreClass="KeyStone.ecore#//SearchSettings">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//SearchSettings/properties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//SearchSettings/expected"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//SearchSettings/depth"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//SearchSettings/index"/>
+    </genClasses>
+    <genClasses ecoreClass="KeyStone.ecore#//Identifier"/>
+    <genClasses ecoreClass="KeyStone.ecore#//BooleanLiteral"/>
+    <genClasses ecoreClass="KeyStone.ecore#//NumberLiteral"/>
+    <genClasses ecoreClass="KeyStone.ecore#//StringLiteral"/>
+    <genClasses ecoreClass="KeyStone.ecore#//RegularExpression"/>
+  </genPackages>
+</genmodel:GenModel>

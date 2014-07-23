@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.devfactory.keystone.sdk"
+      label="KeyStone Programming Language"
+      version="1.0.0.qualifier"
+      provider-name="Nicolas Diaz Aragon">
+
+   <description>
+      For further information, please contact:
+
+ahmed_galal@devfactory.com
+nicolas.daragon@devfactory.com
+   </description>
+
+   <plugin
+         id="com.devfactory.keystone"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.devfactory.keystone.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

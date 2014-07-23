@@ -1,0 +1,63 @@
+grammar com.devfactory.KeyStone hidden(WHITESPACE, NEWLINE, SL_COMMENT)
+
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+generate keyStone "http://www.devfactory.com/KeyStone"
+
+ExpressionStatement: (expression+=RootStep)+;
+Expression: SelectorExpression|Literal;
+RootStep returns Step:
+{RootStep}folderName=SINGLELINE?
+'tell' context=SelectorExpression
+	actions+= (Action | Assertion | Step | Assignment | Javascript)*
+'end';
+Step:
+folderName=SINGLELINE?
+'tell' context=Selector
+	 actions+= (Action | Assertion | Step | Assignment | Javascript)*
+'end';
+Selector returns Expression: SelectorExpression | SearchSettings;
+SearchSettings returns Expression: {SearchSettings}op='['properties+=Identifier expected+=Expression (','properties+=Identifier expected+=Expression)*']'('->'depth=NumberLiteral)?(':'index=NumberLiteral);
+Action: (name=('click'|'right click'|'middle click'|'double click'|'hover') (actionParams=MouseActionParams)?) 
+	| (name='type' actionParams=KeyboardActionParams)
+	| (name='wait' 'for' actionParams=WaitActionParams)
+	| (name='pause' 'for' actionParams=PauseActionParams)
+	| (name='drag' 'to' actionParams=DragActionParams)
+	| (name='open' 'browser' actionParams=OpenBrowserActionParams)
+	| (name='browse' 'to' actionParams=BrowseToActionParams)
+	| (name=('close'|'terminate'|'maximize'|'run'|'refresh'|'aliasedRefresh'))
+;
+Javascript: code=CODE;
+Assignment: 'set' variableName=SelectorExpression 'to' assignedValue=Expression;
+BrowseToActionParams: url=Expression;
+OpenBrowserActionParams: browserName=('InternetExplorer'|'Firefox'|'Chrome'|'Opera'|'Safari');
+DragActionParams: ((x=NUMBER y=NUMBER) | (target=Expression (x=NUMBER y=NUMBER)?)) (grab?='grab' 'from' oX=NUMBER oY=NUMBER)?;
+PauseActionParams: timePaused=NUMBER;
+WaitActionParams: ('property' propertyName=Expression)? expectedValue=Expression delayTime=NUMBER;
+MouseActionParams: (x=NUMBER y=NUMBER (chord=KeyboardChord)?);
+KeyboardActionParams: (overwrite?='overwrite')? text=STRING;
+KeyboardChord: keys+=MetaKey (('and') keys+=MetaKey)*;
+MetaKey: 'shift'| 'alt'| 'ctrl'| 'none';
+Assertion: ('assert' (negated?='not')? filter=FilterExpression) | ('assert' (negated?='not')? 'found' child=SearchSettings);
+FilterExpression returns KeyValuePair: KeyValuePair =>({KeyValuePair.left=current} 'and' right=FilterExpression)*;
+KeyValuePair: {KeyValuePair} property=Expression (valueIsRegex?='regex' | operator=('lt'|'gt'|'lte'|'gte'))? value=Expression;
+SelectorExpression returns Expression: MemberExpression ({Expression.left=current} op='of' right=MemberExpression)*;
+MemberExpression returns Expression: CallExpression =>({Expression.left=current} op='.' right=CallExpression)*;
+CallExpression returns Expression: Identifier =>({Expression.left=current} op='(' (arguments+=Expression)?(','arguments+=Expression)* ')')*;
+Identifier returns Expression: {Identifier}value=ID;
+Literal returns Expression: {BooleanLiteral}value=BOOL | {NumberLiteral}value=NUMBER | {StringLiteral}value=STRING | {RegularExpression}value=REGULAR_EXPRESSION;
+BooleanLiteral returns Expression: value=BOOL;
+NumberLiteral returns Expression: value=NUMBER;
+StringLiteral returns Expression: value=STRING;
+RegularExpression returns Expression: value=REGULAR_EXPRESSION;
+terminal BOOL: 'true'|'false';
+terminal NUMBER: ('0'..'9')+ ('.' ('0'..'9')*)?;
+terminal CODE: '{*' -> '*}';
+terminal STRING: ('"'->'"') | ("'"->"'");
+terminal ID: (('a'..'z')|('A'..'Z')|'_')('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+terminal WHITESPACE: (' '|'\t')+;
+terminal NEWLINE: ('\r' | '\n')+;
+terminal SINGLELINE returns ecore::EString: '#' !('\n'|'\r')* ('\r'? '\n')?;
+terminal SL_COMMENT: '//' !('\n'|'\r')* ('\r'? '\n')?;
+terminal REGULAR_EXPRESSION: '/' !('\\/'|'/')+ '/';

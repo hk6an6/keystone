@@ -1,0 +1,9 @@
+test/
+src-gen
+xtend-gen
+bin
+TestProject/
+*.metadata*
+*.metadata
+*.snap
+.metadata/
