@@ -70,10 +70,10 @@ class KeyStoneLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObjectLab
 		
 	}
 	def text(MouseActionParams ele){
-		'''<«ele.x»,«ele.y»>«IF ele.chord != null» «text(ele.chord)»«ENDIF»'''
+		'''<«ele.x.text»,«ele.y.text»>«IF ele.chord != null» «text(ele.chord)»«ENDIF»'''
 	}
 	def text(KeyboardActionParams ele){
-		'''“«ele.text?:""»”'''
+		'''“«IF ele.text != null»«ele.text.text»«ENDIF»”'''
 	}
 	def text(WaitActionParams ele){
 		'''for «ele.delayTime»ms'''

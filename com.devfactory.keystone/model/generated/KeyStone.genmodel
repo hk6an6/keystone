@@ -56,13 +56,13 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//WaitActionParams/delayTime"/>
     </genClasses>
     <genClasses ecoreClass="KeyStone.ecore#//MouseActionParams">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//MouseActionParams/x"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//MouseActionParams/y"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//MouseActionParams/x"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//MouseActionParams/y"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//MouseActionParams/chord"/>
     </genClasses>
     <genClasses ecoreClass="KeyStone.ecore#//KeyboardActionParams">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//KeyboardActionParams/overwrite"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//KeyboardActionParams/text"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//KeyboardActionParams/text"/>
     </genClasses>
     <genClasses ecoreClass="KeyStone.ecore#//KeyboardChord">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KeyStone.ecore#//KeyboardChord/keys"/>

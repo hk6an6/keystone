@@ -35,8 +35,8 @@ OpenBrowserActionParams: browserName=('InternetExplorer'|'Firefox'|'Chrome'|'Ope
 DragActionParams: ((x=NUMBER y=NUMBER) | (target=Expression (x=NUMBER y=NUMBER)?)) (grab?='grab' 'from' oX=NUMBER oY=NUMBER)?;
 PauseActionParams: timePaused=NUMBER;
 WaitActionParams: ('property' propertyName=Expression)? expectedValue=Expression delayTime=NUMBER;
-MouseActionParams: (x=NUMBER y=NUMBER (chord=KeyboardChord)?);
-KeyboardActionParams: (overwrite?='overwrite')? text=STRING;
+MouseActionParams: (x=Expression y=Expression (chord=KeyboardChord)?);
+KeyboardActionParams: (overwrite?='overwrite')? text=(Expression);
 KeyboardChord: keys+=MetaKey (('and') keys+=MetaKey)*;
 MetaKey: 'shift'| 'alt'| 'ctrl'| 'none';
 Assertion: ('assert' (negated?='not')? filter=FilterExpression) | ('assert' (negated?='not')? 'found' child=SearchSettings);

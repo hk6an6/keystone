@@ -137,14 +137,13 @@ var $_=«prepareCallTarget(step.context)»;
 	}
 
 	def compile(KeyboardActionParams actionParams) {
-		val delimiter = (if(actionParams.text.indexOf("'") < 0) "'" else '"')
-		'''«delimiter»«IF actionParams.overwrite»^a«ENDIF»«actionParams.text»«delimiter»'''
+		'''«IF actionParams.overwrite»('^a'+«ENDIF»«(actionParams.text as Expression).compile»«IF actionParams.overwrite»)«ENDIF»'''
 	}
 
 	def compile(MouseActionParams actionParams) {
 		if (actionParams == null)
 			return ''
-		val parameters = #[actionParams.x, actionParams.y]
+		val parameters = #[actionParams.x.compile, actionParams.y.compile]
 		parameters.join(',')
 	}
 

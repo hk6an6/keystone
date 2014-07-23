@@ -570,7 +570,37 @@ end
 '''
 (function($_){
 var $_=x;
-$_.Keys('hello world');
+$_.Keys("hello world");
+})();
+'''.toString, it.generatedCode.values.head)])		
+	}
+	
+	@Test
+	def void compileTypeWithVariable(){
+'''
+tell x
+	type Project.Variables("myMagicVariable")
+end
+'''.compile([ assertEquals(
+'''
+(function($_){
+var $_=x;
+$_.Keys(Project.Variables("myMagicVariable"));
+})();
+'''.toString, it.generatedCode.values.head)])
+	}
+	
+	@Test
+	def void compileTypeOverwriteWithVariable(){
+'''
+tell x
+	type overwrite Project.Variables("myMagicVariable")
+end
+'''.compile([ assertEquals(
+'''
+(function($_){
+var $_=x;
+$_.Keys(('^a'+Project.Variables("myMagicVariable")));
 })();
 '''.toString, it.generatedCode.values.head)])		
 	}
@@ -585,7 +615,7 @@ end
 '''
 (function($_){
 var $_=x;
-$_.Keys('^ahello world');
+$_.Keys(('^a'+"hello world"));
 })();
 '''.toString, it.generatedCode.values.head)])		
 	}

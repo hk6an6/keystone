@@ -17,6 +17,8 @@ import com.devfactory.keyStone.StringLiteral
 import com.devfactory.keyStone.NumberLiteral
 import com.devfactory.keyStone.RegularExpression
 import com.devfactory.keyStone.BooleanLiteral
+import com.devfactory.keyStone.KeyboardActionParams
+import com.devfactory.keyStone.MouseActionParams
 
 /**
  * Custom validation rules. 
@@ -41,6 +43,7 @@ public static val ONLY_VALID_FOR_BROWSERS = "'open browser' only works on the bu
 	public static val SEARCH_NOT_ALLOWED_AT_TOP_LEVEL = "This 'tell' statement must NEVER be top level"
 	public static val ONLY_FOR_TESTEDAPPS = 'This action is only valid on "TestedApps"'
 	public static val ONLY_FOR_MAPPED_OBJECTS = 'This action is only valid on objects that have been name mapped.';
+	public static val INVALID_PARAMETER_TYPE = 'This parameter type is not allowed for this operation'
 	
 	val TARGETS_ONLY_VALID_AT_TOP_LEVEL = #['Process','Sys','TestedApps','Browsers','Log'].toMap[toString]
 	
@@ -130,8 +133,36 @@ public static val ONLY_VALID_FOR_BROWSERS = "'open browser' only works on the bu
 		val step = (action.eContainer as Step)
 		if(action.name == 'run'){
 			if(!step.context.text.toString.startsWith("TestedApps.")){
-				error("This action is only available on a member of the TestedApps collection.", KeyStonePackage.Literals.ACTION__NAME)
+				error("This action is only available on a member of the TestedApps collection.", KeyStonePackage.Literals.ACTION__NAME, ONLY_FOR_TESTEDAPPS)
 			}
+		}
+	}
+	@Check
+	def checkKeyboardActionParams(KeyboardActionParams actionParameters){
+		if(actionParameters.text instanceof BooleanLiteral
+			|| actionParameters.text instanceof NumberLiteral
+			|| actionParameters.text instanceof RegularExpression
+		){
+			error("type can only take in string literals", KeyStonePackage.Literals.KEYBOARD_ACTION_PARAMS__TEXT, INVALID_PARAMETER_TYPE)
+		}
+	}
+	@Check
+	def checkMouseActionParams(MouseActionParams actionParameters){
+		if(actionParameters.x != null){
+			if(actionParameters.x instanceof BooleanLiteral
+				|| actionParameters.x instanceof StringLiteral
+				|| actionParameters.x instanceof RegularExpression
+			){
+				error("mouse actions can only take in number literals", KeyStonePackage.Literals.MOUSE_ACTION_PARAMS__X, INVALID_PARAMETER_TYPE)
+			}	
+		}
+		if (actionParameters.y != null){
+			if(actionParameters.y instanceof BooleanLiteral
+				|| actionParameters.y instanceof StringLiteral
+				|| actionParameters.y instanceof RegularExpression
+			){
+				error("mouse actions can only take in number literals", KeyStonePackage.Literals.MOUSE_ACTION_PARAMS__Y, INVALID_PARAMETER_TYPE)
+			}	
 		}
 	}
 }

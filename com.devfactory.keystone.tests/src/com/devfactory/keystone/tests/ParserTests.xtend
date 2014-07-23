@@ -815,7 +815,7 @@ end
 		syntaxRoot.assertNoErrors
 		assertEquals('x', syntaxRoot.expression.head.context.value)
 		assertEquals('type', (syntaxRoot.expression.head.actions.head as Action).name)
-		assertEquals('Hello world', ((syntaxRoot.expression.head.actions.head as Action).actionParams as KeyboardActionParams).text)
+		assertEquals('Hello world', ((syntaxRoot.expression.head.actions.head as Action).actionParams as KeyboardActionParams).text.value)
 	}
 	
 	@Test
@@ -829,7 +829,7 @@ end
 		syntaxRoot.assertNoErrors
 		assertEquals('x', syntaxRoot.expression.head.context.value)
 		assertEquals('type', (syntaxRoot.expression.head.actions.head as Action).name)
-		assertEquals('Hello world', ((syntaxRoot.expression.head.actions.head as Action).actionParams as KeyboardActionParams).text)
+		assertEquals('Hello world', ((syntaxRoot.expression.head.actions.head as Action).actionParams as KeyboardActionParams).text.value)
 		assertTrue(((syntaxRoot.expression.head.actions.head as Action).actionParams as KeyboardActionParams).overwrite)
 	}
 	
