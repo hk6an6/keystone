@@ -10,12 +10,18 @@ Expression: SelectorExpression|Literal;
 RootStep returns Step:
 {RootStep}folderName=SINGLELINE?
 'tell' context=SelectorExpression
-	actions+= (Action | Assertion | Step | Assignment | Javascript)*
+	actions+= (Action | Assertion | Assignment | Javascript | Step)*
 'end';
+DataDrivenStep returns Step:
+{DataDrivenStep}folderName=SINGLELINE?
+'on' 'every' columnNames+=Identifier (','columnNames+=Identifier)* 'from' dataSource=Expression
+	actions+= (Action | Assertion | Step | Assignment | Javascript)*
+'end'
+;
 Step:
 folderName=SINGLELINE?
 'tell' context=Selector
-	 actions+= (Action | Assertion | Step | Assignment | Javascript)*
+	 actions+= (Action | Assertion | Assignment | Javascript | Step | DataDrivenStep)*
 'end';
 Selector returns Expression: SelectorExpression | SearchSettings;
 SearchSettings returns Expression: {SearchSettings}op='['properties+=Identifier expected+=Expression (','properties+=Identifier expected+=Expression)*']'('->'depth=NumberLiteral)?(':'index=NumberLiteral);

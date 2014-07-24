@@ -99,6 +99,12 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RootStep" eSuperTypes="#//Step"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataDrivenStep" eSuperTypes="#//Step">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columnNames" upperBound="-1"
+        eType="#//Expression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataSource" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SearchSettings" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
         eType="#//Expression" containment="true"/>

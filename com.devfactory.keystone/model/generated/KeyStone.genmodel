@@ -81,6 +81,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//KeyValuePair/value"/>
     </genClasses>
     <genClasses ecoreClass="KeyStone.ecore#//RootStep"/>
+    <genClasses ecoreClass="KeyStone.ecore#//DataDrivenStep">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//DataDrivenStep/columnNames"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//DataDrivenStep/dataSource"/>
+    </genClasses>
     <genClasses ecoreClass="KeyStone.ecore#//SearchSettings">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//SearchSettings/properties"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KeyStone.ecore#//SearchSettings/expected"/>
