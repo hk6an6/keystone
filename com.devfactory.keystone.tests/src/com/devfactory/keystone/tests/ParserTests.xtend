@@ -19,6 +19,7 @@ import com.devfactory.keyStone.SearchSettings
 import com.devfactory.keyStone.KeyboardActionParams
 import com.devfactory.keyStone.DragActionParams
 import com.devfactory.keyStone.Assignment
+import com.devfactory.keyStone.DataDrivenStep
 
 @InjectWith(KeyStoneInjectorProvider)
 @RunWith(XtextRunner)
@@ -997,5 +998,52 @@ end
 		assertEquals('MyVar5', ((syntaxRoot.expression.head.actions.get(6) as Step).actions.get(4) as Assignment).variableName.right.value)
 		assertEquals('MyVar6', ((syntaxRoot.expression.head.actions.get(6) as Step).actions.get(5) as Assignment).variableName.right.value)
 		assertEquals('true', ((syntaxRoot.expression.head.actions.get(6) as Step).actions.get(5) as Assignment).assignedValue.value)
+	}
+	
+	@Test
+	def void parseOnFrom(){
+		val syntaxRoot =
+'''
+tell x
+	on every customer,street,city,state,zip from MyDataSource
+		assert wText customer
+	end
+end
+'''.parse
+		syntaxRoot.assertNoErrors
+		assertEquals('x', (syntaxRoot.expression.head.context.value))
+		assertTrue((syntaxRoot.expression.head.actions.head) instanceof DataDrivenStep)
+		assertEquals('MyDataSource', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).dataSource.value)
+		assertEquals('customer', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(0).value)
+		assertEquals('street', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(1).value)
+		assertEquals('city', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(2).value)
+		assertEquals('state', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(3).value)
+		assertEquals('zip', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(4).value)
+		assertTrue(((syntaxRoot.expression.head.actions.head) as DataDrivenStep).actions.head instanceof Assertion)
+	}
+	
+	@Test
+	def void parseOnFrom2(){
+		val syntaxRoot =
+'''
+tell x
+	on every customer,street,city,state,zip from MyDataSource
+		tell y
+			assert wText customer
+		end
+	end
+end
+'''.parse
+		syntaxRoot.assertNoErrors
+		assertEquals('x', (syntaxRoot.expression.head.context.value))
+		assertTrue((syntaxRoot.expression.head.actions.head) instanceof DataDrivenStep)
+		assertEquals('MyDataSource', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).dataSource.value)
+		assertEquals('customer', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(0).value)
+		assertEquals('street', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(1).value)
+		assertEquals('city', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(2).value)
+		assertEquals('state', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(3).value)
+		assertEquals('zip', ((syntaxRoot.expression.head.actions.head) as DataDrivenStep).columnNames.get(4).value)
+		assertTrue(((syntaxRoot.expression.head.actions.head) as DataDrivenStep).actions.head instanceof Step)
+		assertEquals('y', (((syntaxRoot.expression.head.actions.head) as DataDrivenStep).actions.head as Step).context.value)
 	}
 }

@@ -890,4 +890,89 @@ ProjectVariables.MyVar6 = $_.ProjectVariables.MyVar3;
 })();
 '''.toString, it.generatedCode.values.head)])		
 	}
+	
+	@Test
+	def void compileOnFrom(){
+'''
+tell x
+	on every customer,street,city,state,zip from MyDataSource
+		assert wText customer
+	end
+end
+'''.compile([ assertEquals(
+'''
+(function($_){
+var $_=x;
+(function($_){
+var $_=x;
+var customer,street,city,state,zip;
+Project.Variables.MyDataSource.Reset();
+while(!Project.Variables.MyDataSource.IsEOF()){
+customer = Project.Variables.MyDataSource.Value("customer");
+street = Project.Variables.MyDataSource.Value("street");
+city = Project.Variables.MyDataSource.Value("city");
+state = Project.Variables.MyDataSource.Value("state");
+zip = Project.Variables.MyDataSource.Value("zip");
+if($_.wText == customer){Log.Checkpoint($_.wText + " == " + customer, 'passed', 300, undefined, ($_ && aqObject.IsSupported($_, "Picture")) ? $_.Picture(): null);}else{Log.Error($_.wText + " == " + customer)}
+Project.Variables.MyDataSource.Next();
+}
+Project.Variables.MyDataSource.Disconnect();
+})();
+})();
+'''.toString, it.generatedCode.values.head)])		
+	}
+	
+	@Test
+	def void compileOnFrom2(){
+'''
+tell x
+	on every Row,Column,CustomerName,invoice from invoices
+		tell myGrid
+			tell Cell(Row,Column)
+				click
+				tell Child(0)
+					assert wText CustomerName
+				end
+				tell Child(1)
+					assert wToolTip invoice
+				end
+			end
+		end
+	end
+end
+'''.compile([ assertEquals(
+'''
+(function($_){
+var $_=x;
+(function($_){
+var $_=x;
+var Row,Column,CustomerName,invoice;
+Project.Variables.invoices.Reset();
+while(!Project.Variables.invoices.IsEOF()){
+Row = Project.Variables.invoices.Value("Row");
+Column = Project.Variables.invoices.Value("Column");
+CustomerName = Project.Variables.invoices.Value("CustomerName");
+invoice = Project.Variables.invoices.Value("invoice");
+(function($_){
+var $_=$_.myGrid;
+(function($_){
+var $_=$_.Cell(Row,Column);
+$_.Click();
+(function($_){
+var $_=$_.Child(0);
+if($_.wText == CustomerName){Log.Checkpoint($_.wText + " == " + CustomerName, 'passed', 300, undefined, ($_ && aqObject.IsSupported($_, "Picture")) ? $_.Picture(): null);}else{Log.Error($_.wText + " == " + CustomerName)}
+})($_);
+(function($_){
+var $_=$_.Child(1);
+if($_.wToolTip == invoice){Log.Checkpoint($_.wToolTip + " == " + invoice, 'passed', 300, undefined, ($_ && aqObject.IsSupported($_, "Picture")) ? $_.Picture(): null);}else{Log.Error($_.wToolTip + " == " + invoice)}
+})($_);
+})($_);
+})($_);
+Project.Variables.invoices.Next();
+}
+Project.Variables.invoices.Disconnect();
+})();
+})();
+'''.toString, it.generatedCode.values.head)])		
+	}
 }

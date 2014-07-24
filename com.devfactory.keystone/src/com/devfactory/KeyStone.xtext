@@ -10,12 +10,12 @@ Expression: SelectorExpression|Literal;
 RootStep returns Step:
 {RootStep}folderName=SINGLELINE?
 'tell' context=SelectorExpression
-	actions+= (Action | Assertion | Assignment | Javascript | Step)*
+	actions+= (Action | Assertion | Assignment | Javascript | Step | DataDrivenStep)*
 'end';
 DataDrivenStep returns Step:
 {DataDrivenStep}folderName=SINGLELINE?
 'on' 'every' columnNames+=Identifier (','columnNames+=Identifier)* 'from' dataSource=Expression
-	actions+= (Action | Assertion | Step | Assignment | Javascript)*
+	actions+= (Action | Assertion | Step | Assignment | Javascript | DataDrivenStep)*
 'end'
 ;
 Step:

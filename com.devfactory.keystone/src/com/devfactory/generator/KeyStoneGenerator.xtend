@@ -27,6 +27,7 @@ import com.devfactory.keyStone.Assignment
 import com.devfactory.keyStone.NumberLiteral
 import com.devfactory.keyStone.BooleanLiteral
 import com.devfactory.keyStone.Javascript
+import com.devfactory.keyStone.DataDrivenStep
 
 /**
  * Generates code from your model files on save.
@@ -76,8 +77,10 @@ class KeyStoneGenerator implements IGenerator {
 
 	def compile(Step step) {
 		var compiled = ''''''
-		callStack.push(step.context.compile())
-		prepareCallTarget(step.context)
+		if(step.context!=null){
+			callStack.push(step.context.compile())
+			prepareCallTarget(step.context)	
+		}
 		compiled += 
 '''
 (function($_){
@@ -85,25 +88,43 @@ class KeyStoneGenerator implements IGenerator {
 try{Log.AppendFolder("«step.folderName.trim.substring(1)»");
 «ENDIF»
 var $_=«prepareCallTarget(step.context)»;
+«IF step instanceof DataDrivenStep»
+var «(step as DataDrivenStep).columnNames.map[compile].join(',')»;
+Project.Variables.«(step as DataDrivenStep).dataSource.compile».Reset();
+while(!Project.Variables.«(step as DataDrivenStep).dataSource.compile».IsEOF()){
+«FOR columnName: (step as DataDrivenStep).columnNames»
+«columnName.compile» = Project.Variables.«(step as DataDrivenStep).dataSource.compile».Value("«columnName.compile»");
+«ENDFOR»
+«ENDIF»
 «FOR action : step.actions»
 	«IF action instanceof Action»
 		«(action as Action).compile»
-	«ELSEIF action instanceof Step»
-		«(action as Step).compile»
 	«ELSEIF action instanceof Assertion»
 		«(action as Assertion).compile»
 	«ELSEIF action instanceof Assignment»
 		«(action as Assignment).compile»
 	«ELSEIF action instanceof Javascript»
 		«(action as Javascript).compile»
+	«ELSEIF action instanceof Step»
+		«(action as Step).compile»
+	«ELSEIF action instanceof DataDrivenStep»
+		«(action as DataDrivenStep).compile»
 	«ENDIF»
-«ENDFOR»«IF step.folderName!=null»
+«ENDFOR»
+«IF step instanceof DataDrivenStep»
+Project.Variables.«(step as DataDrivenStep).dataSource.compile».Next();
+}
+Project.Variables.«(step as DataDrivenStep).dataSource.compile».Disconnect();
+«ENDIF»
+«IF step.folderName!=null»
 }finally{Log.PopLogFolder();}
 «ENDIF»
 })(«IF callStack.size > 1»$_«ENDIF»);
 '''
-		callStack.pop()
-		prepareCallTarget(step.context)
+		if(step.context!=null){
+			callStack.pop()
+			prepareCallTarget(step.context)	
+		}
 		compiled
 	}
 

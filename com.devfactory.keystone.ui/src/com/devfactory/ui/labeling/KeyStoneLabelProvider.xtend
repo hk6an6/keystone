@@ -18,6 +18,7 @@ import com.devfactory.keyStone.Step
 import com.devfactory.keyStone.KeyValuePair
 import com.devfactory.keyStone.Assertion
 import com.devfactory.keyStone.Assignment
+import com.devfactory.keyStone.DataDrivenStep
 
 /**
  * Provides labels for a EObjects.
@@ -108,6 +109,9 @@ class KeyStoneLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObjectLab
 				tag += text(ele.actionParams as BrowseToActionParams)
 		}
 		tag
+	}
+	def text(DataDrivenStep step){
+		('on every ' + step.columnNames.map[text].join(',') + ' from ' + step.dataSource.text)
 	}
 	def text(Step ele){
 		('tell ' + (if(ele.context!=null) text(ele.context)))
